@@ -14,4 +14,17 @@
   	<url-pattern>/teachers</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+  	<servlet-name>session</servlet-name>
+  	<servlet-class>com.h2kinfosys.teachers.service.SessionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>session</servlet-name>
+  	<url-pattern>/session</url-pattern>
+  </servlet-mapping>
+  
+  <session-config>
+  	<session-timeout>3</session-timeout>
+  </session-config>
+  
 </web-app>
