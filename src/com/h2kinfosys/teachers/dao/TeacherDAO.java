@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 import com.h2kinfosys.teachers.dto.TeacherDTO;
@@ -27,6 +28,7 @@ public class TeacherDAO {
 	private static String userName = "root";
 	private static String password = "password";
 	private static String getTeacher = "Select * from Teacher where teacher_id = ?";
+	private static String insertTeacher = "Insert into Teacher (first_name, last_name, skill) values (?,?,?)";
 	
 	public static Connection getConnection() throws ClassNotFoundException {
 		Connection conn = null;
@@ -66,7 +68,30 @@ public class TeacherDAO {
 	
 	public int saveTeacher(TeacherDTO teacher) {
 		// Write JDBC Call to save teacher and return teacherId
-		return 0;
+		int teacherId = 0;
+		try {
+			Connection conn = getConnection();
+			PreparedStatement pStat = conn.prepareStatement(insertTeacher, Statement.RETURN_GENERATED_KEYS);
+			pStat.setString(1, teacher.getFirstName());
+			pStat.setString(2, teacher.getLastName());
+			pStat.setString(3, teacher.getSkill());
+			
+			int numberofRows = pStat.executeUpdate();
+			if(numberofRows == 0) {
+				throw new SQLException("Unable to Insert Teacher");
+			}
+			
+			ResultSet generatedKeys = pStat.getGeneratedKeys();
+			if (generatedKeys.next()) {
+				 teacherId = generatedKeys.getInt(1);
+            } else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
+			conn.close();
+		}catch(Exception sqlEx) {
+			sqlEx.printStackTrace();
+		}
+		return teacherId;
 	}
 	
 
