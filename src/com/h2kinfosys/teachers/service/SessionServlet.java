@@ -24,6 +24,9 @@ public class SessionServlet extends HttpServlet{
 		
 		ServletContext context = getServletContext();
 		context.setAttribute("ContextAttrName", "ContextAttrValue");
+		context.setAttribute("ContextAttrToBeRemoved", "ContextAttrNewValue");
+		context.setAttribute("ContextAttrName", "ContextAttrNewValue");
+		context.removeAttribute("ContextAttrToBeRemoved");
 		
 		PrintWriter out = resp.getWriter();
 		out.println("<html><body>");
