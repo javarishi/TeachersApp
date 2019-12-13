@@ -27,6 +27,10 @@
 <p>Testing scriptlet </p>
 <%
 	out.println("Your IP Address is : " + request.getRemoteAddr());
+	pageContext.setAttribute("jspRequestAttr", "Request Attribute Value", PageContext.REQUEST_SCOPE);
+	pageContext.setAttribute("jspSessionAttr", "Session Attribute Value", PageContext.SESSION_SCOPE);
+	pageContext.setAttribute("jspApplicationAttr", "Context Attribute Value", PageContext.APPLICATION_SCOPE);
+	pageContext.setAttribute("jspPageAttr", "Page Attribute Value", PageContext.PAGE_SCOPE);
 %>
 <!-- Implicit Objects
 	out - PrintWriter -- response.getWriter()
